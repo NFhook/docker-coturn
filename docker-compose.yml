@@ -1,0 +1,40 @@
+version: "3"
+services:
+  coturn:
+    container_name: coturn
+    image: coturn:v4.6.0
+    restart: always
+    privileged: true
+      #ports:
+  ## STUN/TURN          
+  #  - "3478:3478"
+  #  - "3478:3478/udp"
+  #  - "3479:3479"
+  #  - "3479:3479/udp"
+  #  - "80:80"
+  #  - "80:80/udp"
+  ## STUN/TURN SS
+  #  - "5349:5349"
+  #  - "5349:5349/udp"
+  #  - "5350:5350"
+  #  - "5350:5350/udp"
+  #  - "443:443"
+  #  - "443:443/udp"
+  #  - "8080:8080"
+  #  - "8080:8080/udp"
+ # Relay Ports         
+ #      - "49152-65535:49152-65535"
+ #      - "49152-65535:49152-65535/udp"
+    volumes:
+      - ./coturn/turnserver.conf:/etc/turnserver.conf:ro
+      - ./coturn/privkey.pem:/etc/ssl/private/privkey.pem:ro
+      - ./coturn/cert.pem:/etc/ssl/certs/cert.pem:ro
+    network_mode: "host"
+        #networks:
+        #  - coturn-net
+
+
+networks:
+  coturn-net:
+    external:
+      name: docker-network-coturn
